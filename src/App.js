@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import Login from './components/login/Login'
+import Welcome from './components/welcome/Welcome'
 
-function App() {
+function App () {
+  const [isLogged, setIsLogged] = useState(window.localStorage.getItem('isLogged'))
+  const [dataUser, setDataUser] = useState({
+    email: '',
+    password: '',
+    tipo: ''
+  })
+
+  function onSuccess () {
+    setIsLogged('true')
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <main>
+      {isLogged === 'true' ? <Welcome dataUser={dataUser} setDataUser={setDataUser}/> : <Login onSuccess={onSuccess} setDataUser={setDataUser}/>}
+    </main>
+  )
 }
 
-export default App;
+export default App
